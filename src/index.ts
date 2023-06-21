@@ -94,16 +94,23 @@ async function getPrice(myStr: String){
         var tx = "https://flowscan.org/transaction/" + txId
 
         var message = nameOfNft + " purchased for " + salePrice + " " + currency
-        console.log(message)
+        // console.log(message)
         sendToBot(message, tx)
 
     } else {
+        var uid = ""
         if (myStr.includes('.NFT"')){
             var nameOfNft = myStr.split('.NFT"')[0].split('.').at(-1)
+            uid = myStr.split('"nftID":')[1]
+            uid = uid.replace(/\D/g,'')
+
+    
         } else {
             nameOfNft = "TopShot"    
         } 
         
+    
+
         var price = Number(myStr.split('"')[27])
         var txId = myStr.split('"')[13]
         var tx = "https://flowscan.org/transaction/" + txId
@@ -111,13 +118,16 @@ async function getPrice(myStr: String){
         
 
 
-        var message = nameOfNft + " purchased for " + price + " usd "
+        var message = nameOfNft + " id " + uid + " purchased for: " + price + " usd "
         
         if ((nameOfNft == "TopShot")||(nameOfNft == "UFC_NFT")||(nameOfNft == "AllDay")||(nameOfNft == "CricketMoments")){
-            // console.log(message)
+            console.log(message)
+            // console.log(myStr)
         } else{
             console.log(message)
             sendToBot(message, tx)
+            // console.log(myStr)
+
         }
         
         
